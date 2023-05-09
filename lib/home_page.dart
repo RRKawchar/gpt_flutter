@@ -13,62 +13,62 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
         leading: const Icon(Icons.menu),
       ),
-      body: Column(
-        children: [
-          Stack(
-            children: [
-              Center(
-                child: Container(
-                  height: 120,
-                  width: 120,
-                  margin: const EdgeInsets.only(top: 4),
-                  decoration: const BoxDecoration(
-                      color: Pallete.assistantCircleColor,
-                      shape: BoxShape.circle),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Center(
+                  child: Container(
+                    height: 120,
+                    width: 120,
+                    margin: const EdgeInsets.only(top: 4),
+                    decoration: const BoxDecoration(
+                        color: Pallete.assistantCircleColor,
+                        shape: BoxShape.circle),
+                  ),
                 ),
+                Container(
+                  height: 123,
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image:
+                              AssetImage('assets/images/virtualAssistant.png'))),
+                )
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 40).copyWith(
+                top: 30,
               ),
-              Container(
-                height: 123,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image:
-                            AssetImage('assets/images/virtualAssistant.png'))),
-              )
-            ],
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            margin: const EdgeInsets.symmetric(horizontal: 40).copyWith(
-              top: 30,
+              decoration: BoxDecoration(
+                  border: Border.all(color: Pallete.borderColor),
+                  borderRadius:
+                      BorderRadius.circular(20).copyWith(topLeft: Radius.zero)),
+              child: const Text(
+                "Good Morning, What task can I do for you?",
+                style: TextStyle(
+                    fontSize: 25,
+                    color: Pallete.mainFontColor,
+                    fontFamily: 'Cera Pro'),
+              ),
             ),
-            decoration: BoxDecoration(
-                border: Border.all(color: Pallete.borderColor),
-                borderRadius:
-                    BorderRadius.circular(20).copyWith(topLeft: Radius.zero)),
-            child: const Text(
-              "Good Morning, What task can I do for you?",
-              style: TextStyle(
-                  fontSize: 25,
-                  color: Pallete.mainFontColor,
-                  fontFamily: 'Cera Pro'),
+            Container(
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.only(top: 10, left: 22),
+              alignment: Alignment.centerLeft,
+              child: const Text(
+                "Here are a few features",
+                style: TextStyle(
+                    fontFamily: 'Cera Pro',
+                    color: Pallete.mainFontColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            margin: const EdgeInsets.only(top: 10, left: 22),
-            alignment: Alignment.centerLeft,
-            child: const Text(
-              "Here are a few features",
-              style: TextStyle(
-                  fontFamily: 'Cera Pro',
-                  color: Pallete.mainFontColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-          Expanded(
-            child: ListView(
+            Column(
               children: const [
                 FeaturesBox(
                   color: Pallete.firstSuggestionBoxColor,
@@ -89,9 +89,9 @@ class HomePage extends StatelessWidget {
                   'Get the best of both worlds with a voice assistant powered by Dall-E and Chat GPT',
                 ),
               ],
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Pallete.firstSuggestionBoxColor,
