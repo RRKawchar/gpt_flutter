@@ -1,9 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:gpt_flutter/features_box.dart';
 import 'package:gpt_flutter/pallet.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final speechToText = SpeechToText();
+
+  String lastWords='';
+  @override
+  void initState() {
+    super.initState();
+    initSpeechToText();
+  }
+
+  Future<void> initSpeechToText()async{
+    await speechToText.initialize();
+   setState(() {
+
+   });
+  }
+
+  Future<void> startListening() async {
+    await speechToText.listen(onResult: onSpeechResult);
+    setState(() {});
+  }
+
+  Future<void> stopListening() async {
+    await speechToText.stop();
+    setState(() {});
+  }
+
+  void onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      lastWords = result.recognizedWords;
+    });
+  }
+
+  @override
+  void dispose() {
+    speechToText.stop();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +91,7 @@ class HomePage extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border.all(color: Pallete.borderColor),
                   borderRadius:
-                      BorderRadius.circular(20).copyWith(topLeft: Radius.zero)),
+                      BorderRadius.circular(20).copyWith(topLeft: Radius.zero),),
               child: const Text(
                 "Good Morning, What task can I do for you?",
                 style: TextStyle(
@@ -65,7 +110,7 @@ class HomePage extends StatelessWidget {
                     fontFamily: 'Cera Pro',
                     color: Pallete.mainFontColor,
                     fontSize: 20,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.bold,),
               ),
             ),
             Column(
@@ -95,7 +140,15 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Pallete.firstSuggestionBoxColor,
-        onPressed: (){},
+        onPressed: ()async{
+          if(await speechToText.hasPermission && speechToText.isNotListening){
+           await startListening();
+          }else if(speechToText.isListening){
+            await stopListening();
+          }else{
+           initSpeechToText();
+          }
+        },
         child: const Icon(Icons.mic),
       ),
     );
